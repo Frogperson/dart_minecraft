@@ -4,9 +4,9 @@ import '../nbt_writer.dart';
 import 'nbt_array.dart';
 
 /// Represents a array of 8 byte long integers in a NBT file.
-class NbtLongArray extends NbtArray<int> {
+class NbtLongArray extends NbtArray<BigInt> {
   /// Create a [NbtLongArray] with given [parent].
-  NbtLongArray({required String name, required List<int> children})
+  NbtLongArray({required String name, required List<BigInt> children})
       : super(name, NbtTagType.TAG_LONG_ARRAY) {
     this.children = children;
   }

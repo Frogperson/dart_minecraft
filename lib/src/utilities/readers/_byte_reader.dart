@@ -56,12 +56,18 @@ abstract class ByteReader<T> {
   }
 
   /// Reads a 8 byte integer starting at [readPosition].
-  int readLong({bool signed = false}) {
-    final value = signed
-        ? readByteData!.getInt64(readPosition, _endianness)
-        : readByteData!.getUint64(readPosition, _endianness);
+  BigInt readLong({bool signed = false}) {
+    var bytes = readByteData!.buffer.asUint8List(readPosition, 8);
+    if (_endianness == Endian.big) {
+      bytes = Uint8List.fromList(bytes.reversed.toList());
+    }
+
+    BigInt value = BigInt.zero;
+    for (int i = 0; i < 8; i++) {
+      value += BigInt.from(bytes[i]) << (8 * i);
+    }
     readPosition += 8;
-    return value;
+    return signed ? value.toSigned(64) : value.toUnsigned(64);
   }
 
   /// Reads a 8 byte variable length long starting at [readPosition].

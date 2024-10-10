@@ -15,7 +15,7 @@ class PingPacket extends ServerPacket {
 
   @override
   void writePacket(PacketWriter writer) {
-    writer.writeLong(value, signed: true);
+    writer.writeLong(BigInt.from(value), signed: true);
   }
 
   @override

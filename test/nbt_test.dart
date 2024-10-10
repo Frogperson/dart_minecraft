@@ -30,7 +30,7 @@ class NbtFile {
       Endian endian = Endian.big}) async {
     if (file != null) this.file = file;
     if (root == null) return;
-    var writer = NbtWriter();
+    var writer = NbtWriter(nbtCompression: nbtCompression);
     writer.setEndianness = endian;
     await writer.writeFile(this.file.path, root!);
   }
@@ -222,7 +222,7 @@ void main() {
       file.root = NbtCompound(
         name: 'root',
         children: <NbtTag>[
-          NbtLong(name: 'int', value: 0xFFFF), // This should be the first byte.
+          NbtLong(name: 'int', value: BigInt.from( 0xFFFF)), // This should be the first byte.
         ],
       );
       await file.writeFile(
@@ -232,7 +232,7 @@ void main() {
       // a RangeError somewhere in the code.
       file.root = null;
       await file.readFile(endian: Endian.little);
-      expect(file.root?.children[0].value, equals(0xFFFF));
+      expect(file.root?.children[0].value, equals(BigInt.from(0xFFFF)));
     } on NbtException {
       return;
     }

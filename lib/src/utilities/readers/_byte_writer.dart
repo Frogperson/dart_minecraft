@@ -74,11 +74,22 @@ abstract class ByteWriter<T> {
   }
 
   /// Write a single 8 byte long.
-  void writeLong(int value, {bool signed = false}) {
+  void writeLong(BigInt value, {bool signed = false}) {
     flush(8);
-    signed
-        ? writeByteData.setInt64(writePosition, value, _endianness)
-        : writeByteData.setUint64(writePosition, value, _endianness);
+    var bytes = Uint8List(8);
+    for (int i = 0; i < 8; i++) {
+      BigInt shiftedValue = signed ? value.toSigned(64) >> (8 * i) : value >> (8 * i);
+      bytes[i] = shiftedValue.toUnsigned(8).toInt();
+    }
+
+    if (_endianness == Endian.big) {
+      bytes = Uint8List.fromList(bytes.reversed.toList());
+    }
+
+    for (int i = 0; i < 8; i++) {
+      writeByteData.setUint8(writePosition + i, bytes[i]);
+    }
+
     writePosition += 8;
   }
 

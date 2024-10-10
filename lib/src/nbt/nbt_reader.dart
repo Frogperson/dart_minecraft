@@ -29,7 +29,7 @@ class NbtReader extends ByteReader<bool> {
   factory NbtReader.fromFile(String path) => NbtReader(fromFile(path));
 
   /// Reads the NBT data from the byte list.
-  /// Throws [NbtFileReadException] if an issue occured.
+  /// Throws [NbtFileReadException] if an issue occurred.
   NbtCompound read() {
     try {
       root = NbtTag.readNewTag(this, null, withName: true) as NbtCompound;

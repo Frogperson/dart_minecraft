@@ -97,7 +97,7 @@ abstract class NbtTag {
         return NbtInt(name: '', value: 0)
             .readTag(nbtReader, withName: withName);
       case 0x04:
-        return NbtLong(name: '', value: 0)
+        return NbtLong(name: '', value: BigInt.zero)
             .readTag(nbtReader, withName: withName);
       case 0x05:
         return NbtFloat(name: '', value: 0.0)

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
-import 'compression/compression.dart'
-    if (dart.library.io) 'compression/compression_io.dart';
+import 'compression/compression.dart';
 
 /// The compression of a [NbtFile].
 /// Implementation of detecting the compression can be found
@@ -21,11 +20,9 @@ enum NbtCompression {
 }
 
 extension CompressionFunctionExtension on NbtCompression {
-  /// Compress the given [data]. On JS platforms, this
-  /// does nothing, as it requires converters from 'dart:io'.
+  /// Compress the given [data].
   List<int> compressData(Uint8List data) => compress(this, data);
 
-  /// Decompress the given [data]. On JS platforms, this
-  /// does nothing, as it requires converters from 'dart:io'.
+  /// Decompress the given [data].
   Uint8List decompressData(Uint8List data) => decompress(this, data);
 }

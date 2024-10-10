@@ -5,13 +5,13 @@ import 'nbt_tag.dart';
 
 /// Represents a 8 byte long integer in a NBT file.
 class NbtLong extends NbtTag {
-  int _value;
+  BigInt _value;
 
   @override
-  int get value => _value;
+  BigInt get value => _value;
 
   /// Creates a [NbtLong] with given [parent].
-  NbtLong({required String name, required int value})
+  NbtLong({required String name, required BigInt value})
       : _value = value,
         super(name, NbtTagType.TAG_LONG);
 
